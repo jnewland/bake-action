@@ -58,6 +58,8 @@ actionsToolkit.run(
       cwd: inputs.workdir,
       ignoreReturnCode: true
     }).then(res => {
+      core.setOutput('stdout', res.stdout);
+      core.setOutput('stderr', res.stderr);
       if (res.stderr.length > 0 && res.exitCode != 0) {
         throw new Error(`buildx bake failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
       }
